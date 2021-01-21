@@ -31,13 +31,14 @@ module.exports = {
   login: (req, res) => {
     const body = req.body;
     getUserByUserEmail(body.email, (err, results) => {
+      console.log("body for login", req.body)
       if (err) {
         console.log(err);
       }
       if (!results) {
-        return res.json({
+        return res.status(500).json({
           success: 0,
-          data: "Invalid email or password"
+          message: "Invalid Username and Password"
         });
       }
       const result = compareSync(body.password, results.password);
@@ -50,7 +51,7 @@ module.exports = {
           success: true,
           message: "login successfully",
           token: jsontoken,
-         
+
         });
       } else {
         return res.json({

@@ -31,13 +31,12 @@ module.exports = {
   login: (req, res) => {
     const body = req.body;
     getUserByUserEmail(body.email, (err, results) => {
-      console.log("body for login", req.body)
       if (err) {
         console.log(err);
       }
       if (!results) {
-        return res.status(500).json({
-          success: 0,
+        return res.status(200).json({
+          success: false,
           message: "Invalid Username and Password"
         });
       }

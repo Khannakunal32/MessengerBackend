@@ -1,9 +1,17 @@
-const router = require("express").Router();
+const router = require('express').Router()
 
 const {
-    createContact
-  } = require("./contact.controller");
+  handleContactList,
+  deleteContact,
+  updateContact,
+  updatedStatus,
+  addContactForUser,
+} = require('./contact.controller')
 
- router.post("/contact-list", createContact);
-
- module.exports = router;
+router.post('/contact-list', handleContactList)
+router.post('/add-contact', addContactForUser)
+router.delete('/', deleteContact)
+router.post('/update-contact', updateContact)
+//  notifier
+router.post('/notifier', updatedStatus)
+module.exports = router

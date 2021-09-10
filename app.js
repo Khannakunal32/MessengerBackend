@@ -13,13 +13,18 @@ var corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions))
+app.get('/', function(req, res){ 
+  
+    // Equivalent to res.status(200).send('OK') 
+    res.send("ok");  
+})
 
 
 
 app.use("/api/users", userRouter);
 app.use("/api/contact", userContact)
-// const port = process.env.PORT || 4000;
-const port = process.env.PORT
+const port = process.env.PORT || 4000;
+//const port = process.env.PORT
 // const port = 4000
 app.listen(port, () => {
   console.log("server up and running on PORT :", port);

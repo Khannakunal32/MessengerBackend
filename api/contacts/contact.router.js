@@ -10,7 +10,7 @@ const {
 
 router.post('/contact-list', handleContactList)
 router.post('/add-contact', addContactForUser)
-router.delete('/', deleteContact)
+router.post('/delete', deleteContact)
 router.post('/update-contact', updateContact)
 //  notifier
 router.post('/notifier', updatedStatus)

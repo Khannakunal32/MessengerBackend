@@ -2,11 +2,22 @@ const {
   create,
   getUserByUserEmail,
   getUserByUserId,
+	  getUserByUserIdNew,
   getUsers,
   updateUser,
-  deleteUser
+  deleteUser,
+  getMyChatData,
+	storeMyNtoken,
+	getNotification,
+	getSeenStatus,
+	purgeChats,
+	getLastChatForMe,
+	deleteChats,
+	showUserEmailById,
+	storePurchasedOrder,
+	showPurchasedOrder
 } = require("./user.service");
-const { hashSync, genSaltSync, compareSync } = require("bcrypt");
+const { hashSync, genSaltSync, compareSync } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 
 module.exports = {
@@ -114,6 +125,26 @@ module.exports = {
       });
     });
   },
+	 getUserByUserIdNew: (req, res) => {
+    const id = req.body.id;
+    getUserByUserIdNew(id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not Found"
+        });
+      }
+      results.password = undefined;
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
   getUsers: (req, res) => {
     getUsers((err, results) => {
       if (err) {
@@ -126,11 +157,31 @@ module.exports = {
       });
     });
   },
+	
+	  
   updateUsers: (req, res) => {
     const body = req.body;
+    
+    
     const salt = genSaltSync(10);
-    body.password = hashSync(body.password, salt);
+    // body.password = hashSync(body.password, salt);
+    // updateUser(id,body, (err, results) => {
     updateUser(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(req.params);
+      return res.json({
+        
+        success: 1,
+        message: "updated successfully"
+      });
+    });
+  },
+	 storeMyNtoken: (req, res) => {
+    const body = req.body;
+    storeMyNtoken(body, (err, results) => {
       if (err) {
         console.log(err);
         return;
@@ -141,6 +192,154 @@ module.exports = {
       });
     });
   },
+  getMyChatData: (req, res) => {
+    const body = req.body;
+    getMyChatData(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results
+      });
+    });
+  },
+	  purgeChats: (req, res) => {
+    const body = req.body;
+    purgeChats(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results
+      });
+    });
+  },
+	 deleteChats: (req, res) => {
+    const body = req.body;
+    deleteChats(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results
+      });
+    });
+  },
+	 showUserEmailById: (req, res) => {
+    const body = req.body;
+    showUserEmailById(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results
+      });
+    });
+  },
+	
+	
+    getLastChatForMe: (req, res) => {
+    const body = req.body;
+    getLastChatForMe(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results
+      });
+    });
+  },
+	
+	  
+	 getSeenStatus: (req, res) => {
+    const body = req.body;
+    getSeenStatus(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results
+      });
+    });
+  },
+	 storePurchasedOrder: (req, res) => {
+    const body = req.body;
+    storePurchasedOrder(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results
+      });
+    });
+  },
+	
+	
+	 showPurchasedOrder: (req, res) => {
+    const body = req.body;
+    showPurchasedOrder(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results
+      });
+    });
+  },
+	
+	 getNotification: (req, res) => {
+    const body = req.body;
+    getNotification(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        message: results[results.length-1]
+      });
+    });
+  },
+	
+	  
+	  
+	  getUserByUserEmail: (req, res) => {
+    const body= req.body;
+    getUserByUserEmail(body.email, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not Found"
+        });
+      }
+      results.password = undefined;
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
+  
   deleteUser: (req, res) => {
     const data = req.body;
     deleteUser(data, (err, results) => {
